@@ -9,18 +9,16 @@ import org.hibernate.Transaction;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
-    private Util util = new Util();
 
     public UserDaoHibernateImpl() {
 
     }
 
-
     @Override
     public void createUsersTable() {
         Session session = Util.getSessionFactory().openSession();
         Transaction transaction = null;
-        try{
+        try {
             transaction = session.beginTransaction();
             String sql = "CREATE TABLE IF NOT EXISTS  mydbtest.users (\n" +
                     "  id INT NOT NULL AUTO_INCREMENT,\n" +
@@ -50,7 +48,7 @@ public class UserDaoHibernateImpl implements UserDao {
     public void saveUser(String name, String lastName, byte age) {
         Session session = Util.getSessionFactory().openSession();
         Transaction transaction = null;
-        try{
+        try {
             transaction = session.beginTransaction();
             session.save(new User(name, lastName, age));
             transaction.commit();
@@ -68,9 +66,9 @@ public class UserDaoHibernateImpl implements UserDao {
     public void removeUserById(long id) {
         Session session = Util.getSessionFactory().openSession();
         Transaction transaction = null;
-        try{
+        try {
             transaction = session.beginTransaction();
-            User user = (User)session.load(User.class,id);
+            User user = (User) session.load(User.class, id);
             session.delete(user);
             transaction.commit();
         } catch (Exception e) {
@@ -96,7 +94,7 @@ public class UserDaoHibernateImpl implements UserDao {
     public void cleanUsersTable() {
         Session session = Util.getSessionFactory().openSession();
         Transaction transaction = null;
-        try{
+        try {
             transaction = session.beginTransaction();
             Query query = session.createQuery("delete from User");
             query.executeUpdate();
